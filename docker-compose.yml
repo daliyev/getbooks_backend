@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    container_name: library_db
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: library_db
+      POSTGRES_USER: library_admin
+      POSTGRES_PASSWORD: getbooks1304
+
+
+  web:
+    build: .
+    container_name: library_back
+    command: >
+      bash -c "
+        python3 manage.py migrate &&
+        python3 manage.py collectstatic --no-input &&
+        gunicorn --reload -b 0.0.0.0:8000 config.wsgi --workers 1 --timeout 300 --log-level DEBUG
+      "
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
