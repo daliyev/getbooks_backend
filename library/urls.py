@@ -15,7 +15,7 @@ router.register(r'subcategory', SubCategoryViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('home', home_page, name='list_books_with_authors'),
+    # path('home', home_page, name='list_books_with_authors'),
     # path('subcategory/<int:sc_id>/', book_list_by_subcategory_id, name='book_list_by_subcategory_id'),
     path('book-view/', BookViewHistoryCreate.as_view(), name='book-author-view-history')
 ]

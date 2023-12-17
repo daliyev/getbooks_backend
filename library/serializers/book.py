@@ -45,13 +45,23 @@ class BookReadSerializer(serializers.ModelSerializer):
     author = serializers.CharField(source="author.get_full_name", read_only=True)
     subcategory = serializers.CharField(source="subcategory.name", read_only=True)
     publisher = serializers.CharField(source="publisher.name", read_only=True)
+    review_count = serializers.SerializerMethodField()
+    average_rating = serializers.SerializerMethodField()
 
     class Meta:
         model = Book
         fields = "__all__"
+    def get_average_rating(self, obj):
+        # Calculate average rating
+        reviews = Review.objects.filter(book=obj)
+        if reviews.exists():
+            return reviews.aggregate(Avg('rating'))['rating__avg']
+        return 0.0
 
-    count_review = serializers.IntegerField(read_only=True)
-    average_rating = serializers.FloatField(read_only=True)
+    def get_review_count(self, obj):
+        # Get review count
+        return Review.objects.filter(book=obj).count()
+
 
 
 class BookWriteSerializer(serializers.ModelSerializer):

@@ -15,6 +15,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -65,6 +66,32 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "https://localhost:8000",
+    "http://localhost:8000"
+]
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
@@ -165,25 +192,6 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication'
     ]
 }
-CORS_ORIGIN_ALLOW_ALL = True  # Allow access from any origin (recommended for development)
-# OR
-CORS_ORIGIN_WHITELIST = (
-    'https://localhost:8000',
-)  # Specify allowed origins (recommended for production)
-
-CORS_ALLOW_METHODS = (
-    'GET',
-    'POST',
-    'PUT',
-    'PATCH',
-    'DELETE',
-)  # Allow specific HTTP methods
-
-CORS_ALLOW_HEADERS = (
-    'Content-Type',
-    'Authorization',
-    'X-Requested-With',
-)  # Allow specific headers in requests
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -194,7 +202,8 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=120),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
-
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024 * 200  # 20 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024 * 200  # 20 MB
 
 # Email_backend
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

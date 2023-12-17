@@ -41,7 +41,7 @@ schema_view = get_schema_view(
     public=True,
     permission_classes=[permissions.AllowAny],
     generator_class=JWTSchemaGenerator,
-    # url=f"https://{settings.ALLOWED_HOSTS[0]}",
+    url=f"https://{settings.ALLOWED_HOSTS[0]}",
 )
 
 urlpatterns = [

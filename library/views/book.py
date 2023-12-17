@@ -41,7 +41,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
 
 
 class BookViewSet(viewsets.ModelViewSet):
-    queryset = Book.objects.all()
+    queryset = Book.objects.all().annotate()
 
     def get_serializer_class(self):
         if self.action in ("create", "update", "partial_update", "destroy"):
@@ -56,21 +56,21 @@ class BookViewSet(viewsets.ModelViewSet):
     #     return super().get_permissions()
 
 
-@api_view(['GET'])
-def home_page(request):
-    books = get_book_list()
-    categories = get_category()
-    subcategories = get_subcategory()
-
-    context = {
-        "books": books,
-        "categories": categories,
-        "subcategories": subcategories
-    }
-
-    return Response(context)
-
-
-@api_view(['GET'])
-def book_list_by_subcategory_id(request, sc_id):
-    return Response(get_book_list_by_subcategory_id(sc_id))
+# @api_view(['GET'])
+# def home_page(request):
+#     books = get_book_list()
+#     categories = get_category()
+#     subcategories = get_subcategory()
+#
+#     context = {
+#         "books": books,
+#         "categories": categories,
+#         "subcategories": subcategories
+#     }
+#
+#     return Response(context)
+#
+#
+# @api_view(['GET'])
+# def book_list_by_subcategory_id(request, sc_id):
+#     return Response(get_book_list_by_subcategory_id(sc_id))
